@@ -1,22 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
-    <title>ANIME-HT</title>
+    <meta charset="UTF-8">
+    <title>ระบบความปลอดภัย</title>
     <style>
-        /* Ensure the iframe takes up full viewport height */
-        html, body, iframe {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            border: none;
+        /* ซ่อนแบนเนอร์ (สามารถกำหนดสไตล์เพิ่มเติมได้ตามต้องการ) */
+        #banner {
+            display: none;
         }
-        iframe {
+        /* iframe ขนาดเต็มหน้าจอ */
+        #content {
             width: 100%;
-            height: 100%;
+            height: 100vh;
+            border: none;
         }
     </style>
 </head>
 <body>
-    <iframe src="http://43.159.226.91" title="Embedded Content"></iframe>
+    <!-- กำหนด iframe สำหรับแสดงเนื้อหา -->
+    <div id="banner"></div>
+    <iframe id="content" src="http://43.159.226.91"></iframe>
+
+    <script>
+        // ฟังก์ชันตรวจจับ DevTools
+        function detectDevTools() {
+            const threshold = 160; // กำหนดความสูงของ DevTools ที่จะตรวจจับได้
+            const checkDevTools = () => {
+                if (window.outerHeight - window.innerHeight > threshold || window.outerWidth - window.innerWidth > threshold) {
+                    document.body.innerHTML = '<h1 style="text-align: center; color: red;">โปรดอย่าเปิด Developer Tools ในการใช้งานหน้านี้</h1>';
+                }
+            };
+            // ตรวจจับทุกๆ 500 มิลลิวินาที
+            setInterval(checkDevTools, 500);
+        }
+
+        // เริ่มฟังก์ชันตรวจจับ DevTools เมื่อโหลดหน้าเสร็จ
+        document.addEventListener('DOMContentLoaded', detectDevTools);
+
+        // ปิดการคลิกขวา
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+        // ป้องกันการกดปุ่ม F12, Ctrl+Shift+I, และ Ctrl+S
+        document.addEventListener('keydown', event => {
+            if (event.key === 'F12' || (event.ctrlKey && event.shiftKey && event.key === 'I') || (event.ctrlKey && event.key === 's')) {
+                event.preventDefault();
+                window.location.href = 'bandevtoo.html'; // เปลี่ยนเส้นทางไปที่ bandevtoo.html
+            }
+        });
+
+        // ตัวอย่างฟังก์ชันแสดงข้อความ
+        function showMessage() {
+            alert("Hello World!");
+        }
+    </script>
 </body>
 </html>
